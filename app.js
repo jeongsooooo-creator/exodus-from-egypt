@@ -95,6 +95,7 @@ function setMapArea(points) {
     return {text,point:project([lon,lat])};
   });
   geographyLayer.replaceChildren(...geoNodes.map(({text}) => text));
+  document.dispatchEvent(new Event("map-area-change"));
 }
 const track = node("polyline", {class:"track", "aria-hidden":"true"});
 const traveledTrack = node("polyline", {class:"traveled-track", "aria-hidden":"true"});

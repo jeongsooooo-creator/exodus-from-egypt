@@ -1,9 +1,13 @@
-# 애굽에서 가나안까지
+# 애굽에서 가나안까지 · 출애굽 여정
 
-[![애굽에서 가나안까지 출애굽 여정 미리보기](assets/preview.svg)](https://exodus-to-canaan.jeongsooooo.chatgpt.site/)
+[지도 실행하기](https://jeongsooooo-creator.github.io/exodus-from-egypt/)
 
-[인터랙티브 지도 열기](https://exodus-to-canaan.jeongsooooo.chatgpt.site/)
+![출애굽 여정 미리보기](assets/preview.svg)
 
-라암셋에서 여리고까지의 여정을 재생하고, 방문지의 사건과 말씀을 살펴볼 수 있습니다. 지도에는 현대 지형을 사용하며, 고대 지명과 경로에는 추정이 포함됩니다. 지도 이용에는 사이트 접근 권한이 필요합니다.
+출애굽기부터 여호수아까지 21개 방문지의 사건과 말씀을 지도에서 확인하는 웹 프로그램입니다. 전체 여정 자동 재생, 구간 선택, 장소 툴팁, 시내산 후보 비교, 사진 확대를 지원합니다.
 
-[미리보기 시작 화면](index.html) · [사이트 아이콘](assets/icon.svg)
+전체 지도에는 지형 음영을 적용했고, 사진이 없는 16개 장소에는 실제 표고 데이터를 바탕으로 만든 입체 지형 그림을 제공합니다. 입체 그림의 높낮이는 이해를 돕기 위해 3배 강조했습니다. 현대 지형과 추정 경로이며, 고대 지명의 정확한 위치에는 불확실성이 있습니다.
+
+별도 빌드 없이 저장소의 정적 파일을 GitHub Pages에서 실행합니다. 로컬에서는 `python -m http.server 8000` 실행 후 브라우저로 열 수 있습니다.
+
+지형 데이터: USGS / Mapzen Terrain Tiles. 해안선: Natural Earth. 개별 사진 출처는 프로그램 내 자료 설명에 표시합니다.

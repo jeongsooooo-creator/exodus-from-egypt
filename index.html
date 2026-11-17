@@ -2,19 +2,77 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#142b35">
-<meta name="description" content="출애굽 여정을 라암셋에서 여리고까지 따라가는 성경 지도">
-<title>애굽에서 가나안까지 · 출애굽 여정</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#142d3c">
+<meta name="description" content="출애굽기에서 시작해 가나안에 이르는 성경의 여정을 지도에서 재생하고, 시내산과 바다 횡단 위치의 여러 견해를 비교합니다.">
+<title>출애굽 여정 | 애굽에서 가나안까지</title>
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-<style>
-:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#11252e;color:#fff4dd}body{margin:0;padding:clamp(16px,4vw,46px)}main{max-width:1040px;margin:auto}img{display:block;width:100%;border:1px solid #41616a;border-radius:16px}section{margin-top:18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}a{color:#142b35;background:#f6cd88;text-decoration:none;padding:10px 15px;border-radius:8px;font-weight:700}a:focus-visible{outline:2px solid #fff;outline-offset:4px}p{margin:0;color:#bfcecb;font-size:.9rem}
-</style>
+<meta property="og:title" content="애굽에서 가나안까지 · 출애굽 여정">
+<meta property="og:image" content="https://jeongsooooo-creator.github.io/exodus-from-egypt/assets/preview.svg">
+<link rel="stylesheet" href="style.css">
+<script src="land.js" defer></script><script src="data.js" defer></script><script src="app.js" defer></script>
 </head>
 <body>
 <main>
-<img src="assets/preview.svg" alt="애굽에서 가나안까지. 라암셋, 시내산, 가데스 바네아, 여리고를 잇는 출애굽 여정 개요">
-<section aria-label="출애굽 지도 열기"><a href="https://exodus-to-canaan.jeongsooooo.chatgpt.site/">인터랙티브 지도 열기</a><p>지도 이용에는 사이트 접근 권한이 필요합니다.</p></section>
+<div class="topbar">
+<header class="hero">
+<p class="eyebrow">출애굽기에서 여호수아까지</p>
+<h1>애굽에서 가나안까지</h1>
+<p class="subtitle">이스라엘 백성의 여정을 따라가며 사건과 말씀을 살펴보세요.</p>
+</header>
+<nav class="tabs" aria-label="출애굽 여정 구간"></nav>
+</div>
+<div class="layout">
+<section class="map-card" aria-label="출애굽 여정 지도">
+<div class="map-heading"><div><h2 id="journey"></h2><p id="range"></p></div><button id="compare" type="button">시내산·경로 비교</button></div>
+<div class="playback" aria-label="여정 재생">
+<div class="playback-actions"><button id="play" type="button">▶ 여정 재생</button><button id="restart" type="button" disabled>↺ 처음부터</button></div>
+<p id="travel-status" role="status">재생하면 선택한 여정을 자동으로 따라갑니다.</p>
+</div>
+<div class="map-wrap">
+<svg id="map" viewBox="0 0 960 630" aria-label="애굽과 시나이반도에서 가나안까지의 지도" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M 48 0 H 0 V 48" fill="none" stroke="#729aa9" stroke-opacity=".15"/></pattern>
+<clipPath id="frame"><rect width="960" height="630"/></clipPath>
+</defs>
+<rect width="960" height="630" fill="#142d3c"/>
+<g clip-path="url(#frame)" id="world"><g id="base"></g><g id="route"></g><g id="markers"></g></g>
+</svg>
+<div class="zoom" aria-label="지도 확대 축소"><button id="plus" aria-label="확대">+</button><button id="minus" aria-label="축소">−</button><button id="reset" aria-label="지도 전체 보기">⌂</button></div>
+</div>
+<div class="map-foot"><span>배경은 현대 지형, 점선은 추정 경로입니다.</span><span class="map-credits"><a href="https://github.com/tilezen/joerd/blob/master/docs/attribution.md" target="_blank" rel="noopener" title="SRTM data courtesy of the U.S. Geological Survey · Mapzen Terrain Tiles">USGS · Mapzen</a> · <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener">Natural Earth</a></span></div>
+</section>
+<aside class="details" aria-label="방문지 사건과 말씀">
+<div id="detail" aria-live="polite" tabindex="0" aria-label="선택한 방문지 설명" role="region"></div>
+<div class="stepper"><button id="prev">← 이전 장소</button><button id="next">다음 장소 →</button></div>
+</aside>
+</div>
+<section class="itinerary" aria-labelledby="stops-title">
+<div class="itinerary-heading"><h2 id="stops-title">방문 순서</h2><p id="intro"></p></div>
+<div class="stops"></div>
+</section>
 </main>
+<dialog id="research" aria-labelledby="research-title">
+<div class="research-header"><h2 id="research-title">시내산과 출애굽 경로 비교</h2><form method="dialog"><button type="submit">닫기</button></form></div>
+<p class="research-intro">성경은 여정의 순서와 사건을 전합니다. 여러 지명의 정확한 위치는 알려져 있지 않아 같은 본문에서도 서로 다른 경로가 제안됩니다.</p>
+<h3>시내산 후보</h3>
+<div class="research-grid">
+<div class="candidate-map">
+<svg id="candidate-map" viewBox="0 0 480 300" aria-label="시내산 후보 지역 지도"></svg>
+<div id="candidate-list" aria-label="시내산 후보 선택"></div>
+</div>
+<article id="candidate-detail" aria-live="polite"></article>
+</div>
+<h3>바다를 건넌 곳</h3>
+<ul class="route-options">
+<li><strong>나일 삼각주 동쪽 호수·습지</strong> — 발라·팀사·비터 호수 주변 등이 거론됩니다. 히브리어 지명 <i>얌 수프</i>를 ‘갈대 바다’로 이해하는 해석과 고대 호수 지형 연구가 근거입니다. 지도에서는 발라 호수 일대를 예시로 삼았습니다. <a href="https://www.tyndalebulletin.org/article/32999-the-hebrew-exodus-from-and-jeremiah-s-eisodus-into-egypt-in-the-light-of-recent-archaeological-and-geological-developments" target="_blank" rel="noopener">호프마이어 연구 ↗</a></li>
+<li><strong>수에즈만 북단</strong> — 시나이 남쪽으로 이어지는 전통적 지도에서 자주 보이는 안입니다. 현대 수에즈만과 성경의 구체적인 횡단 지점을 연결하기에는 지명과 당시 해안선 자료에 불확실성이 있습니다. <a href="https://www.biblesociety.org.uk/uploads/content/shop/files/9780564070572-GNB5-Compact-Mission.pdf" target="_blank" rel="noopener">Bible Society 지도 ↗</a></li>
+<li><strong>아카바만</strong> — 누웨이바 등에서 아라비아 쪽으로 건넜다는 제안입니다. 아라비아 시내산설과 함께 제시되기도 합니다. 해저 지형이나 현대 사진만으로 횡단 장소를 확인하기는 어렵습니다. <a href="https://biblearchaeology.org/mount-sinai-is-not-jebel-allawz-in-saudi-arabia/" target="_blank" rel="noopener">고든 프란츠의 검토 ↗</a></li>
+</ul>
+</dialog>
+<dialog id="place-dialog" aria-labelledby="place-image-title">
+<div class="research-header"><h2 id="place-image-title"></h2><form method="dialog"><button type="submit">닫기</button></form></div>
+<div id="place-image-content"></div>
+</dialog>
 </body>
 </html>
